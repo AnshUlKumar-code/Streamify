@@ -36,16 +36,16 @@ const signup = async (req, res) => {
         })
         try {
             await upsertStreamUser({
-                id:newUser._id,
-                name:newUser.fullName,
-                image:newUser.profilePic || ""
+                id: newUser._id,
+                name: newUser.fullName,
+                image: newUser.profilePic || ""
             })
             console.log(`Stream user created for ${newUser._id}`);
-            
+
         } catch (error) {
             console.log(`error in creating  stream  user ,${error.mssage}`);
-            
-            
+
+
         }
 
 
@@ -55,7 +55,7 @@ const signup = async (req, res) => {
         })
 
         res.cookie("jwt", token, {
-            maxAge: 7 * 24 * 60 *60* 1000,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             sameSite: "strict",
             secure: process.env.NODE_ENV === "production"
@@ -106,10 +106,11 @@ const login = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             sameSite: "strict",
-            secure:process.env.NODE_ENV === "production"
+            secure: process.env.NODE_ENV === "production"
         })
         res.status(200).json({
             success: true,
+            token,
             message: "Login"
         })
     } catch (error) {
@@ -127,4 +128,50 @@ const logout = async (req, res) => {
 
 }
 
-export { signup, login, logout }
+const onBoarding = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { bio, nativeLanguage, learningLanguage, location } = req.body;
+        if (!bio || !nativeLanguage || !learningLanguage || !location) {
+            res.status.json({
+                success: false, missingField: [
+                    !bio && "bio",
+                    !nativeLanguage && "nativeLanguage",
+                    !learningLanguage && "learninganguage",
+                    !location && "location"
+                ], message: "All fields must be filled"
+            })
+            return;
+        }
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            ...req.body,
+            isOnboarded: true
+        }, { new: true })
+
+        if (!updatedUser) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+        res.status(200).json({
+            success:true,
+            updatedUser,
+            message:"user updated"
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: error.message
+        })
+
+
+    }
+
+
+
+
+}
+
+export { signup, login, logout, onBoarding }
