@@ -104,13 +104,16 @@ const login = async (req, res) => {
 
         res.cookie("jwt", token, {
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
+            httpOnly: false,
             sameSite: "strict",
             secure: process.env.NODE_ENV === "production"
         })
+       // console.log(res.cookie);
+        
         res.status(200).json({
             success: true,
-            token,
+           
+            
             message: "Login"
         })
     } catch (error) {
@@ -133,11 +136,11 @@ const onBoarding = async (req, res) => {
         const userId = req.user._id;
         const { bio, nativeLanguage, learningLanguage, location } = req.body;
         if (!bio || !nativeLanguage || !learningLanguage || !location) {
-            res.status.json({
+            res.status(400).json({
                 success: false, missingField: [
                     !bio && "bio",
                     !nativeLanguage && "nativeLanguage",
-                    !learningLanguage && "learninganguage",
+                    !learningLanguage && "learningLanguage",
                     !location && "location"
                 ], message: "All fields must be filled"
             })
@@ -154,6 +157,20 @@ const onBoarding = async (req, res) => {
                 message: "User not found"
             })
         }
+        try {
+            await upsertStreamUser({
+                id:updatedUser._id.toString(),
+                name:updatedUser.fullName,
+                image:updatedUser.profilePic || "",
+            })
+            console.log("Stream user is being updated");
+            
+        } catch (error) {
+            console.log(error.message);
+        }
+
+
+
         res.status(200).json({
             success:true,
             updatedUser,

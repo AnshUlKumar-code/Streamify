@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 async function authMiddleware(req,res,next){
 try {
-        const token=req.cookies.token;
+        const token=req.headers.token;
 
     if(!token){
         res.status(400).json({message:"No token found"})

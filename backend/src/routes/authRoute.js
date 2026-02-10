@@ -3,17 +3,20 @@ import { login,logout,signup ,onBoarding} from "../controllers/authController.js
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 
-const userRouter=Router();
+const authRouter=Router();
 
-userRouter.post("/signup",signup)
+authRouter.post("/signup",signup)
 
-userRouter.post("/login",login)
+authRouter.post("/login",login)
 
-userRouter.post("/logout",logout)
+authRouter.post("/logout",logout)
 
-userRouter.post("/onboarding",authMiddleware,onBoarding)
+authRouter.post("/onboarding",authMiddleware,onBoarding)
 
-export default userRouter
+
+
+
+export default authRouter
 
 
 

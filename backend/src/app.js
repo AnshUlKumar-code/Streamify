@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from  "dotenv"
-import userRouter from "./routes/authRoute.js"
+import authRouter from "./routes/authRoute.js"
 import { connectDB } from "./config/DBconfig.js";
 import cookieParser from "cookie-parser"
 
@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 
 
-app.use("/api/auth",userRouter);
+app.use("/api/auth",authRouter);
 
 app.get("/",(req,res)=>{
     res.json({
