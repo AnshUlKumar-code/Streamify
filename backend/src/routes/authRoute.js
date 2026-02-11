@@ -13,6 +13,13 @@ authRouter.post("/logout",logout)
 
 authRouter.post("/onboarding",authMiddleware,onBoarding)
 
+authRouter.get("/me",authMiddleware,(req,res)=>{
+    res.status(200).json({
+        success:true,
+        user:req.user
+    })
+})
+
 
 
 

@@ -4,6 +4,8 @@ import authRouter from "./routes/authRoute.js"
 import { connectDB } from "./config/DBconfig.js";
 import cookieParser from "cookie-parser"
 import { userRouter } from "./routes/userRoute.js";
+import { chatRouter } from "./routes/chatRoute.js";
+import cors from "cors"
 
 
 
@@ -14,12 +16,17 @@ const port=process.env.PORT
 
 app.use(express.json())
 app.use(cookieParser());
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 
 
 
 
 app.use("/api/auth",authRouter);
 app.use("/api/users", userRouter);
+app.use("/app/chat",chatRouter)
 
 app.get("/",(req,res)=>{
     res.json({
