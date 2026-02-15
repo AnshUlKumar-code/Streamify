@@ -4,8 +4,10 @@ import User from "../models/User.js";
 
 async function authMiddleware(req,res,next){
 try {
-     console.log("Cookies ->", req.cookies)
-    console.log("Header Cookie ->", req.headers.cookie)
+    // console.log("|||  AUTH MIDDLE WARE FUNCTION |||||    ----------------------------------");
+    
+    //  console.log("Cookies ->", req.cookies)
+    // console.log("Header Cookie ->", req.headers.cookie)
         const token=req.cookies.jwt;
 
     if(!token){
@@ -26,6 +28,9 @@ try {
         })
     }
     req.user=findUser
+    // res.json({
+    //     message:"u are authenticated"
+    // })
     next()
 
 } catch (error) {

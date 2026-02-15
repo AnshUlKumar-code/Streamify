@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ShipWheelIcon } from "lucide-react";
 import { Link } from "react-router";
-import  {useQueryClient,useMutation} from "@tanstack/react-query"
-import { login } from "../lib/api";
-//import useLogin from "../hooks/useLogin";
+
+import useLogin from "../hooks/useLogin";
+import { useThemeStore } from "../store/useThemeStore";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -11,20 +11,9 @@ const Login = () => {
     password: "",
   });
 
-  //This is how we did it at first, without using our custom hook
-  const queryClient = useQueryClient();
-  const {
-    mutate: loginMutation,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: login,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
-  });
+   const { isPending, error, loginMutation } = useLogin();
 
-  // This is how we did it using our custom hook - optimized version
-//   const { isPending, error, loginMutation } = useLogin();
-
+    const { theme } = useThemeStore();
   const handleLogin = (e) => {
     e.preventDefault();
     loginMutation(loginData);
@@ -33,7 +22,7 @@ const Login = () => {
   return (
     <div
       className="h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
-      data-theme="forest"
+      data-theme={theme}
     >
       <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
         {/* LOGIN FORM SECTION */}
@@ -122,7 +111,7 @@ const Login = () => {
           <div className="max-w-md p-8">
             {/* Illustration */}
             <div className="relative aspect-square max-w-sm mx-auto">
-              <img src="/i.png" alt="Language connection illustration" className="w-full h-full" />
+              <img src="/Video call-bro (1).png" alt="Language connection illustration" className="w-full h-full" />
             </div>
 
             <div className="text-center space-y-3 mt-6">

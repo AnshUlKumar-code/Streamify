@@ -11,6 +11,8 @@ const useAuthUser=()=>{
   })
 
   const authUser=data?.user;
+  console.log(authUser);
+  
   return {data,isLoading,error,authUser}
 
 }

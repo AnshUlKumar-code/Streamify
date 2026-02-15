@@ -17,7 +17,8 @@
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.13.0",
-    "root": "github:tanstack/react-query"
+    "root": "github:tanstack/react-query",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

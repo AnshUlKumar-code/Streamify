@@ -123,12 +123,19 @@ const login = async (req, res) => {
     }
 }
 
-const logout = async (req, res) => {
-    res.clearCookie("jwt")
-    res.status(200).json({ success: true, message: "Lohout successfully" })
-
-
+function logout(req, res) {
+  
+  
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production"
+  });
+  
+  console.log("Set-Cookie header sent:", res.getHeaders()['set-cookie']);
+  res.status(200).json({ success: true, message: "Logout successful" });
 }
+
 
 const onBoarding = async (req, res) => {
     try {

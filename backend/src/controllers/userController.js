@@ -89,7 +89,6 @@ async function sendFriendRequest(req, res) {
     }
 }
 
-
 async function acceptFriendRequest(req, res) {
     try {
         const {id}  = req.params;
