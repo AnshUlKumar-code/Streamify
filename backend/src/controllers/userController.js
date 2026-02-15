@@ -91,6 +91,8 @@ async function sendFriendRequest(req, res) {
 
 async function acceptFriendRequest(req, res) {
     try {
+        console.log("=======acceptFrriendRequest===========");
+        
         const {id}  = req.params;
         const friendRequest = await FriendRequest.findById(id);
         if (!friendRequest) {
@@ -130,30 +132,29 @@ async function acceptFriendRequest(req, res) {
 
 }
 
-async function getFriendRequest(req,res){
-   try {
-     const id=req.user.id;
-    const friendRequest=await FriendRequest.find({
-        recipient:id,
-        status:"pending",
-    }).populate("sender","fullName nativeLanguage learningLanguage profilePic")
-
-    const acceptedRequest=await FriendRequest.find({
-        sender:id,
-        status:"accepted",
-    }).populate("recipient","fullName profilePic")
-
-    res.status(201).json({
-        success:true,
-        friendRequest,acceptedRequest
-    })
-
-   } catch (error) {
-     console.log(error);
-        res.status(500).json({ message: error.message })
+ async function getFriendRequest(req, res) {
+  try {
+   
     
-   }
+    const incomingReqs = await FriendRequest.find({
+      recipient: req.user.id,
+      status: "pending",
+    }).populate("sender", "fullName profilePic nativeLanguage learningLanguage");
 
+    const acceptedReqs = await FriendRequest.find({
+      sender: req.user.id,
+      status: "accepted",
+    }).populate("recipient", "fullName profilePic");
+  
+    
+    
+    
+
+    res.status(200).json({ incomingReqs, acceptedReqs });
+  } catch (error) {
+    console.log("Error in getPendingFriendRequests controller", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 async function outgoingFriendRequest(req,res){
     try {
@@ -162,10 +163,7 @@ async function outgoingFriendRequest(req,res){
             sender:id,
             status:"pending"
         }).populate("recipient","fullName nativeLanguage learningLanguage profilePic")
-        res.status(200).json({
-            success:true,
-            outgoingfriendRequest
-        })
+        res.status(200).json(outgoingfriendRequest)
     } catch (error) {
          console.log(error);
         res.status(500).json({ message: error.message })

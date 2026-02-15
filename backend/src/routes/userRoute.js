@@ -10,8 +10,8 @@ userRouter.get("/",authMiddleware,getRecommendedUsers)
 
 
 userRouter.post("/friend-request/:id",authMiddleware,sendFriendRequest)
-userRouter.post("/friend-request/:id/accept",authMiddleware,acceptFriendRequest)
-userRouter.get("/friends",authMiddleware,getFriendRequest)
+userRouter.put("/friend-request/:id/accept",authMiddleware,acceptFriendRequest)
+userRouter.get("/friend-request",authMiddleware,getFriendRequest)
 userRouter.get("/outgoing-friend-request",authMiddleware,outgoingFriendRequest)
 
 export {userRouter}

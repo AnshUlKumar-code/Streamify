@@ -14,7 +14,7 @@ import { capitialize } from "../lib/utils";
 import FriendCard, { getLanguageFlag } from "../components/FriendCard";
 import NoFriendsFound from "../components/NoFriendsFound";
 
-const Home = () => {
+const HomePage = () => {
   const queryClient = useQueryClient();
   const [outgoingRequestsIds, setOutgoingRequestsIds] = useState(new Set());
 
@@ -53,7 +53,7 @@ const Home = () => {
       <div className="container mx-auto space-y-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Your Friends</h2>
-          <Link to="/notifications" className="btn btn-outline btn-sm">
+          <Link to="/notification" className="btn btn-outline btn-sm">
             <UsersIcon className="mr-2 size-4" />
             Friend Requests
           </Link>
@@ -169,4 +169,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

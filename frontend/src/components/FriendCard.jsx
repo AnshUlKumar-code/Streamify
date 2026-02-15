@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { LANGUAGE_TO_FLAG } from "../constants";
 
 const FriendCard = ({ friend }) => {
@@ -13,12 +13,12 @@ const FriendCard = ({ friend }) => {
           <h3 className="font-semibold truncate">{friend.fullName}</h3>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          <span className="badge badge-secondary text-xs">
+        <div className="flex gap-1.5 mb-3">
+          <span className="badge badge-secondary text-xs inline-flex items-center gap-1 whitespace-nowrap">
             {getLanguageFlag(friend.nativeLanguage)}
             Native: {friend.nativeLanguage}
           </span>
-          <span className="badge badge-outline text-xs">
+          <span className="badge badge-outline text-xs inline-flex items-center gap-1 whitespace-nowrap">
             {getLanguageFlag(friend.learningLanguage)}
             Learning: {friend.learningLanguage}
           </span>
@@ -44,7 +44,7 @@ export function getLanguageFlag(language) {
       <img
         src={`https://flagcdn.com/24x18/${countryCode}.png`}
         alt={`${langLower} flag`}
-        className="h-3 mr-1 inline-block"
+        className="w-4 h-3 object-cover"
       />
     );
   }

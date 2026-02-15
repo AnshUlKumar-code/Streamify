@@ -26,7 +26,7 @@ app.use(cors({
 
 app.use("/api/auth",authRouter);
 app.use("/api/users", userRouter);
-app.use("/app/chat",chatRouter)
+app.use("/api/chat",chatRouter)
 
 app.get("/",(req,res)=>{
     res.json({

@@ -79,22 +79,69 @@ export async function getOutgoingFriendReqs() {
       });
       console.log("O------------Outgoing friend requrest--------------");
       
- return response.data.outgoingfriendRequest || [];
+ return response.data;
 }
 
 export async function sendFriendRequest(userId) {
-try {
-  console.log(userId);
+  try {
   
-    const response = await axios.post( `${import.meta.env.VITE_BASE_URL}/users/friend-request/${userId}`,{},{
+    
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/friend-request/${userId}`,
+      {},
+      { withCredentials: true }
+    );
+    
+    return response.data;
+  } catch (error) {
+    // Log the actual backend error message
+    console.log("Error response:", error.response?.data);
+    console.log("Error status:", error.response?.status);
+    throw error;
+  }
+}
+
+export async function getFriendRequests() {
+  try {
+    const response = await axios.get(import.meta.env.VITE_BASE_URL+"/users/friend-request",{
+        withCredentials: true
+      });
+   
+      
+  return response.data;
+  } catch (error) {
+      console.log("Error response:", error.response?.data);
+    console.log("Error status:", error.response?.status);
+    throw error;
+    
+  }
+}
+
+export async function acceptFriendRequest(requestId) {
+try {
+    const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/users/friend-request/${requestId}/accept`,{},{
         withCredentials: true
       });
   return response.data;
-  
 } catch (error) {
-  console.log(error);
+   console.log("Error response:", error.response?.data);
+    console.log("Error status:", error.response?.status);
+    throw error;
   
-
   
 }
+}
+
+export async function getStreamToken() {
+  try {
+    const response = await axios.get(import.meta.env.VITE_BASE_URL+"/chat/token",{
+        withCredentials: true
+      });
+  return response.data;
+  } catch (error) {
+       console.log("Error response:", error.response?.data);
+    console.log("Error status:", error.response?.status);
+    throw error;
+    
+  }
 }
