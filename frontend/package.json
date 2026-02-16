@@ -21,6 +21,7 @@
     "root": "github:tanstack/react-query",
     "stream-chat": "^9.32.0",
     "stream-chat-react": "^13.13.6",
+    "streamify": "file:..",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
