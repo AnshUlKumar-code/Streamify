@@ -50,7 +50,7 @@ const Navbar = () => {
                 <BellIcon className="h-6 w-6 text-base-content opacity-70" />
               </Link>
 
-              <div className="hidden sm:block">
+              <div >
                 <ThemeSelector />
               </div>
 
